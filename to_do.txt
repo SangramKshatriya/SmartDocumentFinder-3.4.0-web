@@ -1,0 +1,78 @@
+py -3.11 -m venv .venv
+Set-ExecutionPolicy -Scope Process Bypass
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+Copy-Item .env.example .env
+code .env
+
+python scripts/check_setup.py
+pytest -q
+python scripts/test_remote_language_services.py
+
+
+python scripts/test_remote_language_services.py
+python scripts/test_sarvam_stt_auth.py
+
+pytest -q
+
+python scripts/list_microphones.py
+
+python scripts/test_live_sarvam_stt.py
+
+python app.py
+
+
+
+--------------------
+
+git add .
+git status
+git diff --cached --stat
+
+git commit -m "Fix multilingual document search and Sarvam pipeline"
+
+git push origin main
+
+
+
+------------
+
+
+cd "C:\path\to\your\existing\smart-document-fetch"
+
+git status
+git remote -v
+
+.\.venv\Scripts\Activate.ps1
+
+pytest -q
+
+git status
+git diff --stat
+
+git add .
+git status
+
+git commit -m "Fix multilingual document search and Sarvam pipeline"
+
+git pull --rebase origin main
+
+git push origin main
+
+
+
+--------------------------------
+
+
+deactivate
+Remove-Item -Recurse -Force .venv
+py -3.11 -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements.txt
+python -m pip install -r requirements-dev.txt
+python -c "from dotenv import load_dotenv; print('dotenv OK')"
+python scripts/check_setup.py
+pytest -q

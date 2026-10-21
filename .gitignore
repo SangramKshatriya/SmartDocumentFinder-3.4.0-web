@@ -1,0 +1,16 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+data/*.db
+data/*.db-shm
+data/*.db-wal
+*.log
+*.wav
+data/digilocker/
+.coverage
+
+documents/
+uploads/
