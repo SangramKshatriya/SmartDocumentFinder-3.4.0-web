@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Activity · SmartDocumentFinder{% endblock %}
+{% block content %}
+<section class="welcome-row"><div><div class="eyebrow">PRIVATE ACCOUNT AUDIT</div><h1>My activity</h1><p>Your account, search, document-fetch and document-open events. This page only shows activity for your account.</p></div><a class="button button-secondary" href="{{ url_for('index') }}">← Workspace</a></section>
+<section class="metrics-grid history-metrics">
+  <div class="metric-card"><span class="metric-label">Searches recorded</span><strong class="metric-number">{{ stats.get('searches', searches|length) }}</strong><span class="metric-foot">Text and voice searches</span></div>
+  <div class="metric-card"><span class="metric-label">My documents</span><strong class="metric-number">{{ stats.get('documents', documents|length) }}</strong><span class="metric-foot">Fetched into this account</span></div>
+  <div class="metric-card"><span class="metric-label">Activity events</span><strong class="metric-number">{{ stats.get('events', events|length) }}</strong><span class="metric-foot">Login, connections and document actions</span></div>
+</section>
+<section class="panel history-panel"><div class="section-heading"><div><div class="panel-kicker">SEARCH LOG</div><h2>Recent searches</h2></div></div>
+  {% if searches %}<div class="table-wrap"><table><thead><tr><th>Query</th><th>Input</th><th>Language</th><th>Results</th><th>Status</th><th>When (UTC)</th></tr></thead><tbody>{% for item in searches %}<tr><td>{{ item.query }}</td><td>{{ item.input_mode|title }}</td><td>{{ item.language or '—' }}</td><td>{{ item.results_count }}</td><td><span class="status status-{{ item.status|lower }}">{{ item.status }}</span></td><td>{{ item.created_at }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-inline">No searches recorded yet.</div>{% endif %}
+</section>
+<section class="panel history-panel"><div class="section-heading"><div><div class="panel-kicker">AUDIT TRAIL</div><h2>Account and document activity</h2></div></div>
+  {% if events %}<div class="table-wrap"><table><thead><tr><th>Event</th><th>Status</th><th>Details</th><th>When (UTC)</th></tr></thead><tbody>{% for item in events %}<tr><td>{{ item.event_type|replace('_',' ')|title }}</td><td><span class="status status-{{ item.status|lower }}">{{ item.status }}</span></td><td>{% if item.details %}{% if item.details.get('document_name') %}{{ item.details.get('document_name') }}{% elif item.details.get('results_count') is not none %}{{ item.details.get('results_count') }} result(s){% elif item.details.get('reason') %}{{ item.details.get('reason') }}{% else %}Recorded{% endif %}{% else %}Recorded{% endif %}</td><td>{{ item.created_at }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-inline">No activity events recorded yet.</div>{% endif %}
+</section>
+{% endblock %}

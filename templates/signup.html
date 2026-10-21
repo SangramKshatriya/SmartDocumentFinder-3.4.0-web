@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Create account · SmartDocumentFinder{% endblock %}
+{% block content %}
+<section class="auth-layout auth-layout-compact">
+  <div class="auth-story">
+    <div class="eyebrow">GET YOUR OWN WORKSPACE</div>
+    <h1>Your documents,<br><span>organized around you.</span></h1>
+    <p>Create a SmartDocumentFinder account. Your search history, fetched files, connected sources and timeline are stored separately from other users.</p>
+    <div class="privacy-checklist"><p><span>✓</span> Individual account and password</p><p><span>✓</span> Private document storage per account</p><p><span>✓</span> Connect DigiLocker only through official authorization</p></div>
+  </div>
+  <section class="panel auth-panel">
+    <div class="panel-kicker">NEW ACCOUNT</div>
+    <h2>Create your account</h2>
+    <form method="post" action="{{ url_for('signup') }}" class="form-stack">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+      <label for="display_name">Full name</label>
+      <input id="display_name" name="display_name" required maxlength="120" autocomplete="name" placeholder="Your name">
+      <label for="username">Username</label>
+      <input id="username" name="username" required minlength="3" maxlength="40" pattern="[A-Za-z0-9][A-Za-z0-9_.-]{2,39}" autocomplete="username" placeholder="Choose a username">
+      <label for="email">Email <span class="optional">(optional)</span></label>
+      <input id="email" type="email" name="email" maxlength="254" autocomplete="email" placeholder="you@example.com">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required minlength="10" autocomplete="new-password" placeholder="At least 10 characters">
+      <label for="confirm_password">Confirm password</label>
+      <input id="confirm_password" name="confirm_password" type="password" required minlength="10" autocomplete="new-password" placeholder="Enter it again">
+      <button class="button button-primary button-full" type="submit">Create account <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="auth-switch">Already registered? <a href="{{ url_for('login') }}">Sign in</a></p>
+  </section>
+</section>
+{% endblock %}

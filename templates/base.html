@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1d32">
+  <title>{% block title %}SmartDocumentFinder{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+  <script src="{{ url_for('static', filename='voice.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='sync.js') }}" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('index') if session.get('user_id') else url_for('login') }}">
+      <span class="brand-mark">SD</span>
+      <span><strong>SmartDocumentFinder</strong><small>Your multilingual document assistant</small></span>
+    </a>
+    {% if session.get('user_id') %}
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="{{ url_for('index') }}">Workspace</a>
+        <a href="{{ url_for('timeline') }}">Timeline</a>
+        <a href="{{ url_for('history') }}">Activity</a>
+        {% if is_admin %}<a href="{{ url_for('admin_audit') }}">Admin audit</a>{% endif %}
+        <span class="nav-user">{{ session.get('display_name', 'User') }}</span>
+        <form method="post" action="{{ url_for('logout') }}" class="inline-form">
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+          <button class="nav-logout" type="submit">Sign out</button>
+        </form>
+      </nav>
+    {% endif %}
+  </header>
+  <main class="page-shell">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}<section class="flash-stack" aria-live="polite">
+        {% for category, message in messages %}<div class="flash flash-{{ category }}">{{ message }}</div>{% endfor %}
+      </section>{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">SmartDocumentFinder <span>·</span> Personal document workspace <span>·</span> User-controlled connections</footer>
+</body>
+</html>

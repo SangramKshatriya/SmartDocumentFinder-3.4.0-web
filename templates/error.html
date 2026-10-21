@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block title %}Error {{ code }} · Smart Document Finder{% endblock %}
+{% block content %}<section class="panel error-panel"><div class="eyebrow">REQUEST COULD NOT BE COMPLETED</div><div class="error-code">{{ code }}</div><h1>Something needs attention.</h1><p>{{ message }}</p><a class="button button-primary" href="{{ url_for('index') if session.get('authenticated') else url_for('login') }}">Return to workspace</a></section>{% endblock %}

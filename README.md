@@ -285,5 +285,3 @@ The microphone button uses the browser's SpeechRecognition/Web Speech API when s
 - DigiLocker access is consent-based and available only after requester-partner approval and API setup. A successful website deploy does not mean partner access is active.
 - This web version does not yet provide password-reset email, multi-factor authentication, a user-facing deletion/export center, or an external durable job queue. The current background worker is an in-process thread and the Dockerfile intentionally runs one Gunicorn worker; a process restart can interrupt an active sync (the UI marks a stale job and allows retry). Keep access restricted while handling sensitive documents and add these controls before broad public rollout.
 - Use HTTPS, a strong persistent `WEB_APP_SECRET_KEY`, PostgreSQL, persistent document storage, and least-privilege database credentials in production.
-#   S m a r t D o c u m e n t F i n d e r - 3 . 4 . 0 - w e b  
- 

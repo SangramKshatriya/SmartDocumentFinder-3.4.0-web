@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Sign in · SmartDocumentFinder{% endblock %}
+{% block content %}
+<section class="auth-layout">
+  <div class="auth-story">
+    <div class="eyebrow">YOUR DOCUMENTS. ONE WORKSPACE.</div>
+    <h1>Find what matters.<br><span>Just ask.</span></h1>
+    <p>Connect an authorized document source, search in your language, speak your query, and build a personal timeline from your records.</p>
+    <div class="auth-feature"><span class="feature-icon">⌕</span><span><strong>Natural-language search</strong><small>Find a document by name, type, or information inside it.</small></span></div>
+    <div class="auth-feature"><span class="feature-icon">◖</span><span><strong>Voice assistant</strong><small>Use your microphone in supported browsers to speak a search.</small></span></div>
+    <div class="auth-feature"><span class="feature-icon">◷</span><span><strong>Personal timeline</strong><small>Review dates found in documents with evidence and source links.</small></span></div>
+  </div>
+  <section class="panel auth-panel">
+    <div class="panel-kicker">PRIVATE ACCOUNT</div>
+    <h2>Welcome back</h2>
+    <p class="muted">Sign in to your own private workspace.</p>
+    <form method="post" action="{{ url_for('login', next=request.args.get('next', '')) }}" class="form-stack">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+      <label for="identifier">Username or email</label>
+      <input id="identifier" name="identifier" required maxlength="254" autocomplete="username" placeholder="Your username or email">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required autocomplete="current-password" placeholder="Your password">
+      <button class="button button-primary button-full" type="submit">Sign in <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="auth-switch">New here? <a href="{{ url_for('signup') }}">Create an account</a></p>
+    <p class="privacy-note">Your SmartDocumentFinder password is separate from DigiLocker. Never enter your DigiLocker password on this website.</p>
+  </section>
+</section>
+{% endblock %}

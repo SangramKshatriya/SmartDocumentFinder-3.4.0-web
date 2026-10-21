@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}Admin audit · SmartDocumentFinder{% endblock %}
+{% block content %}
+<section class="welcome-row"><div><div class="eyebrow">RESTRICTED ADMIN VIEW</div><h1>System activity audit</h1><p>Metadata-only audit trail across registered accounts. Document contents and access tokens are not displayed here.</p></div><a class="button button-secondary" href="{{ url_for('index') }}">← Workspace</a></section>
+<section class="panel history-panel"><div class="section-heading"><div><div class="panel-kicker">RECENT EVENTS</div><h2>Who did what, and when</h2></div><span class="pill">Up to 500 events</span></div>
+  {% if events %}<div class="table-wrap"><table><thead><tr><th>Account</th><th>Event</th><th>Status</th><th>Details</th><th>When (UTC)</th></tr></thead><tbody>{% for item in events %}<tr><td><strong>{{ item.display_name or item.username or 'Unknown' }}</strong><small class="table-subline">{{ item.username or '—' }}</small></td><td>{{ item.event_type|replace('_',' ')|title }}</td><td><span class="status status-{{ item.status|lower }}">{{ item.status }}</span></td><td>{% if item.details %}{{ item.details.get('document_name') or item.details.get('name') or item.details.get('query') or item.details.get('reason') or ('Document #' ~ item.details.get('document_id') if item.details.get('document_id') else 'Recorded') }}{% else %}Recorded{% endif %}</td><td>{{ item.created_at }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-inline">No audit events are available yet.</div>{% endif %}
+</section>
+{% endblock %}
